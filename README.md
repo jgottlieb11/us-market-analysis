@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This project provides an in-depth analysis of daily log returns for U.S. stocks, utilizing data from the Finnhub and Yahoo Finance APIs. The primary goal was to capture a comprehensive view of the U.S. stock market by examining both days with price changes (non-zero log returns) and days with no changes (zero log returns). By incorporating both active trading days and periods of inactivity, this analysis presents insights into the behavior of stocks across various activity levels, offering perspectives relevant to both long-term investors and short-term traders.
+This project provides an in-depth analysis of daily log returns for U.S. stocks, utilizing data from the Finnhub and Yahoo Finance APIs. The primary goal was to capture a comprehensive view of the U.S. stock market by examining both days with price changes (non-zero log returns) and days with no changes (zero log returns). By incorporating both active trading days and periods with zero returns—resulting from low trading volume or lack of price movement—this analysis presents insights into the behavior of stocks across various activity levels, offering perspectives relevant to both long-term investors and short-term traders.
 
 To handle the substantial dataset, I implemented the following preprocessing steps:
 1. **Symbol Sampling**: Randomly sampled stocks to manage processing time while ensuring a diverse selection of stocks in terms of trading frequency and activity.
-2. **Inclusion of Zero Returns**: Retained zero returns to assess the broader market behavior, while also analyzing only non-zero returns to focus on patterns in active trading periods.
+2. **Inclusion of Zero Returns**: Retained zero returns to assess the broader market behavior, capturing stocks with low trading volume and price changes, while also analyzing only non-zero returns to focus on patterns in active trading periods.
 3. **Batch Processing**: Processed data in manageable batches to optimize performance and data handling.
 
 ---
@@ -22,8 +22,8 @@ To handle the substantial dataset, I implemented the following preprocessing ste
 #### Methodology:
 1. **Mean Log Return Calculation**: For each stock symbol, I calculated the mean of daily log returns to capture each stock's average return over the period.
 2. **Separate Analyses with and without Zero Log Returns**:
-   - *Including Zero Log Returns*: Includes all trading days, reflecting the performance of low-trading stocks.
-   - *Excluding Zero Log Returns*: Focuses only on active trading days, providing insights into stocks with frequent price movements.
+   - *Including Zero Log Returns*: This includes all trading days, capturing stocks with low trading volumes that may not see daily price changes.
+   - *Excluding Zero Log Returns*: Focuses on days with active trading, providing insights into stocks that experience more frequent price movements.
 
 #### Key Observations and Insights:
 - **Market Stability**: The concentration of returns around zero in both plots indicates market stability, with minimal overall gains or losses when aggregated across stocks.
@@ -153,8 +153,6 @@ To handle the substantial dataset, I implemented the following preprocessing ste
 
 ## Conclusion
 
-This analysis offers a detailed view of the U.S. stock market’s performance, capturing both broad market stability and specific patterns in active trading periods. By including zero returns, the study presents a conservative measure of the market, ideal for understanding overall stability. In contrast, focusing on non-zero returns provides insights into more dynamic trading activity, useful for risk-seeking investors.
-
-The findings highlight key aspects of return distribution, volatility, extreme price changes, and potential day-of-week effects. While the dataset was limited to a small sample of all U.S. stocks, the dual analysis approach provides a balanced perspective on market behavior, catering to both long-term and short-term investment strategies.
+This analysis offers a detailed view of the U.S. stock market’s performance, capturing both broad market stability and specific patterns in active trading periods. By including zero returns, the study presents a conservative measure of the market, ideal for understanding overall stability and the effect of low trading volume. In contrast, focusing on non-zero returns highlights the behavior of actively traded stocks, providing insights relevant to short-term trading and volatility. Although the dataset covers a small sample of U.S. stocks, this dual approach offers a balanced view of market behavior, suitable for various investment strategies.
 
 ---
