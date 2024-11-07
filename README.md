@@ -1,43 +1,81 @@
-# U.S. Stock Market Data Analysis
+# U.S. Stock Data Analysis
 
 ## Introduction
 
-This project focuses on analyzing daily stock returns for U.S. stocks using time series log returns data. The data was retrieved using the Finnhub and Yahoo Finance APIs, and Python libraries like `pandas` and `matplotlib` were utilized to process and visualize meaningful trends. The goal was to conduct a holistic analysis, capturing both active and less active stocks to understand general market behavior while identifying specific patterns within subsets of stocks with varying trading frequencies.
+This project provides a comprehensive analysis of U.S. stock data using daily log returns, examining various statistical properties and patterns across different stocks. Through an investigation of mean log returns, volatility, autocorrelation, and other metrics, we aim to uncover insights into market behavior, focusing both on stocks with regular trading volume and less active markets.
 
 ## Data Preprocessing
 
-Given the dataset’s extensive volume (over 500,000 observations), data processing presented challenges in terms of time and identifying clear patterns amid noise. To manage this, I implemented batch processing and random sampling by ticker symbol. Sampling helped reduce the data volume, facilitating clearer trend identification without distorting the dataset’s representation of the market. Both zero returns (periods with no price movement) and non-zero returns were kept, allowing for a broad analysis that includes low-volume stocks and actively traded ones.
+Data preprocessing involved filtering and sampling data by stock symbols, with two separate analyses: one that included zero log returns (capturing inactive trading days) and one that excluded them (highlighting active trading days). This dual approach allowed for a holistic view of market activity and a focused analysis of stocks with consistent trading activity.
 
-## Aggregate Analysis
+## Analysis
 
 ### Figure 1: Distribution of Mean Log Returns Across All Stocks
+#### Including Zero Log Returns
+![Distribution of Mean Log Returns - Including Zero](figures/meanlogreturnincl.png)
+#### Excluding Zero Log Returns
+![Distribution of Mean Log Returns - Excluding Zero](figures/meanlogreturnexcl.png)
 
-The histogram in Figure 1 illustrates the concentration of mean log returns around zero. Most stocks in the dataset have average returns close to zero, suggesting a balanced market state without extreme long-term gains or losses. This distribution often reflects a diversified portfolio effect, where individual fluctuations are offset by the broader market’s stability.
+This figure shows the distribution of average returns across all stocks, illustrating the central tendency of most stocks to have mean returns close to zero.
 
 ### Figure 2: Volatility (Standard Deviation of Log Returns) Across Stocks
+#### Including Zero Log Returns
+![Volatility Across Stocks - Including Zero](figures/volatilityincl.png)
+#### Excluding Zero Log Returns
+![Volatility Across Stocks - Excluding Zero](figures/volatilityexcl.png)
 
-Figure 2 shows the distribution of volatility, represented by the standard deviation of log returns across stocks. The plot reveals that most stocks exhibit low to moderate volatility, aligning with the risk-averse nature of many market participants who favor stable returns. The presence of a few highly volatile stocks as outliers suggests high-risk opportunities or market instability for specific stocks.
+The volatility plot shows that most stocks experience low to moderate levels of volatility, with only a few stocks exhibiting higher volatility.
 
 ### Figure 3: Min vs. Max Log Returns for Each Stock
+#### Including Zero Log Returns
+![Min vs Max Log Returns - Including Zero](figures/minmaxincl.png)
+#### Excluding Zero Log Returns
+![Min vs Max Log Returns - Excluding Zero](figures/minmaxexcl.png)
 
-The scatter plot in Figure 3 provides insight into each stock’s minimum and maximum log returns, with most stocks clustering around a narrow range. This clustering highlights the relatively stable performance of most stocks, with limited fluctuations. However, outliers with extremely high maximum or low minimum returns indicate stocks with more pronounced fluctuations, reflecting high-risk, high-reward dynamics.
+The scatter plot compares minimum and maximum log returns for each stock, highlighting the degree of variation and risk across individual stocks.
 
-### Figure 4: Mean Log Return vs. Volatility (Standard Deviation of Log Return)
+### Figure 4: Mean Log Return vs Volatility (Standard Deviation of Log Return)
+#### Including Zero Log Returns
+![Mean vs Volatility - Including Zero](figures/meanvincl.png)
+#### Excluding Zero Log Returns
+![Mean vs Volatility - Excluding Zero](figures/meanvexcl.png)
 
-The relationship between mean log return and volatility in Figure 4 reveals a concentration of stocks at low average returns and low volatility, while a few stocks deviate as high-volatility outliers. This clustering suggests that stable stocks are predominant, while a few offer potential for higher gains at increased uncertainty. The risk-return tradeoff is evident here, where greater volatility is often accompanied by variable returns.
+This figure explores the relationship between mean returns and volatility, providing insights into the risk-return tradeoff across different stocks.
 
 ### Figure 5: Correlation Matrix of Summary Statistics
+#### Including Zero Log Returns
+![Correlation Matrix - Including Zero](figures/confincl.png)
+#### Excluding Zero Log Returns
+![Correlation Matrix - Excluding Zero](figures/confexcl.png)
 
-The correlation matrix in Figure 5 explores relationships among various summary statistics like mean log return, volatility, minimum, and maximum log returns. Notable insights include:
-
-- Mean Log Return and Volatility: A slight negative correlation suggests that high average returns can occur without high volatility, offering potential for stable gains.
-- Minimum and Maximum Returns: A strong positive correlation reflects that stocks with extreme high values also tend to have extreme low values, highlighting volatility.
-- Volatility and Minimum Returns: The negative correlation suggests that more volatile stocks are more likely to experience low minimum returns, underlining the downside risk associated with volatility.
-
-This matrix captures the interactions between volatility, returns, and risk measures across stocks, aiding in understanding how different financial statistics influence one another.
+The correlation matrix provides a statistical summary of relationships between metrics such as mean, volatility, and min/max returns.
 
 ## Time Series Analysis
 
 ### Figure 6: Autocorrelation Analysis (30-Day Lag)
+#### Including Zero Log Returns
+![Autocorrelation Analysis - Including Zero](figures/autoincl.png)
+#### Excluding Zero Log Returns
+![Autocorrelation Analysis - Excluding Zero](figures/autoexcl.png)
 
-The autocorrelation plot in Figure 6 captures the persistence of returns over time. Short-term autocorrelation values are mild, reflecting weak correlations that rapidly decline across longer lags. This trend aligns with the weak-form efficient market hypothesis, where returns should exhibit minimal correlation over time. Minor initial autocorrelation could stem from market micr
+The autocorrelation analysis examines return persistence over a 30-day period, showing how the correlation of returns decreases over time.
+
+### Figure 7: 30-Day Rolling Volatility Across All Stocks
+#### Including Zero Log Returns
+![30-Day Rolling Volatility - Including Zero](figures/30incl.png)
+#### Excluding Zero Log Returns
+![30-Day Rolling Volatility - Excluding Zero](figures/30excl.png)
+
+The 30-day rolling volatility plot reflects changes in market conditions over time, highlighting periods of increased or decreased volatility.
+
+### Figure 8: Day-of-Week Effect on Log Returns
+#### Including Zero Log Returns
+![Day of Week Effect - Including Zero](figures/weakincl.png)
+#### Excluding Zero Log Returns
+![Day of Week Effect - Excluding Zero](figures/weakexcl.png)
+
+This analysis explores whether certain days of the week exhibit consistent return patterns, revealing any potential day-of-week effect on returns.
+
+## Conclusion
+
+This analysis sheds light on the dynamics of U.S. stock returns and volatility, examining patterns across both inactive and actively traded stocks. By including and excluding zero log returns, we can see both the effects of stagnant trading periods and the behavior of more liquid stocks, providing a broad and insightful view into stock market performance.
