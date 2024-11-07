@@ -1,81 +1,160 @@
-# U.S. Stock Data Analysis
+# U.S. Stock Time Series Analysis
 
 ## Introduction
 
-This project provides a comprehensive analysis of U.S. stock data using daily log returns, examining various statistical properties and patterns across different stocks. Through an investigation of mean log returns, volatility, autocorrelation, and other metrics, we aim to uncover insights into market behavior, focusing both on stocks with regular trading volume and less active markets.
+This project provides an in-depth analysis of daily log returns for U.S. stocks, utilizing data from the Finnhub and Yahoo Finance APIs. The primary goal was to capture a comprehensive view of the U.S. stock market by examining both days with price changes (non-zero log returns) and days with no changes (zero log returns). By incorporating both active trading days and periods of inactivity, this analysis presents insights into the behavior of stocks across various activity levels, offering perspectives relevant to both long-term investors and short-term traders.
 
-## Data Preprocessing
+To handle the substantial dataset, I implemented the following preprocessing steps:
+1. **Symbol Sampling**: Randomly sampled stocks to manage processing time while ensuring a diverse selection of stocks in terms of trading frequency and activity.
+2. **Inclusion of Zero Returns**: Retained zero returns to assess the broader market behavior, while also analyzing only non-zero returns to focus on patterns in active trading periods.
+3. **Batch Processing**: Processed data in manageable batches to optimize performance and data handling.
 
-Data preprocessing involved filtering and sampling data by stock symbols, with two separate analyses: one that included zero log returns (capturing inactive trading days) and one that excluded them (highlighting active trading days). This dual approach allowed for a holistic view of market activity and a focused analysis of stocks with consistent trading activity.
+---
 
-## Analysis
+## Aggregate Analysis
 
 ### Figure 1: Distribution of Mean Log Returns Across All Stocks
-#### Including Zero Log Returns
-![Distribution of Mean Log Returns - Including Zero](figures/meanlogreturnincl.png)
-#### Excluding Zero Log Returns
-![Distribution of Mean Log Returns - Excluding Zero](figures/meanlogreturnexcl.png)
+![Distribution of Mean Log Returns - Excluding Zero Log Returns](figures/meanlogreturnexcl.png)  
+![Distribution of Mean Log Returns - Including Zero Log Returns](figures/meanlogreturnincl.png)
 
-This figure shows the distribution of average returns across all stocks, illustrating the central tendency of most stocks to have mean returns close to zero.
+**Objective**: This plot examines the distribution of mean log returns across different stock symbols to observe general performance over the analyzed timeframe.
+
+#### Methodology:
+1. **Mean Log Return Calculation**: For each stock symbol, I calculated the mean of daily log returns to capture each stock's average return over the period.
+2. **Separate Analyses with and without Zero Log Returns**:
+   - *Including Zero Log Returns*: Includes all trading days, reflecting the performance of low-trading stocks.
+   - *Excluding Zero Log Returns*: Focuses only on active trading days, providing insights into stocks with frequent price movements.
+
+#### Key Observations and Insights:
+- **Market Stability**: The concentration of returns around zero in both plots indicates market stability, with minimal overall gains or losses when aggregated across stocks.
+- **Effect of Trading Frequency**: Including zero returns highlights low-activity stocks with low variation, while excluding them reveals the dynamics of more actively traded stocks.
+
+---
 
 ### Figure 2: Volatility (Standard Deviation of Log Returns) Across Stocks
-#### Including Zero Log Returns
-![Volatility Across Stocks - Including Zero](figures/volatilityincl.png)
-#### Excluding Zero Log Returns
-![Volatility Across Stocks - Excluding Zero](figures/volatilityexcl.png)
+![Volatility (Standard Deviation of Log Returns) - Excluding Zero Log Returns](figures/volatilityexcl.png)  
+![Volatility (Standard Deviation of Log Returns) - Including Zero Log Returns](figures/volatilityincl.png)
 
-The volatility plot shows that most stocks experience low to moderate levels of volatility, with only a few stocks exhibiting higher volatility.
+**Objective**: This plot evaluates the volatility of each stock’s returns, showing how much individual stocks fluctuate over time.
+
+#### Methodology:
+1. **Volatility Calculation**: Calculated the standard deviation of log returns for each stock symbol.
+2. **Separate Analyses for Different Perspectives**:
+   - *Including Zero Log Returns*: Captures low volatility in stocks with fewer daily price changes.
+   - *Excluding Zero Log Returns*: Focuses on stocks with more consistent price movements, emphasizing periods of active trading.
+
+#### Key Observations and Insights:
+- **Distribution Shape**: The inclusion of zero returns skews the distribution toward lower volatility, representing low-activity stocks. Excluding zero returns reveals a wider range of volatility among frequently traded stocks.
+- **Market Composition**: Including zero returns provides a conservative measure of market risk, while excluding zero returns highlights higher activity levels and potential short-term trading opportunities.
+
+---
 
 ### Figure 3: Min vs. Max Log Returns for Each Stock
-#### Including Zero Log Returns
-![Min vs Max Log Returns - Including Zero](figures/minmaxincl.png)
-#### Excluding Zero Log Returns
-![Min vs Max Log Returns - Excluding Zero](figures/minmaxexcl.png)
+![Min vs Max Log Returns - Excluding Zero Log Returns](figures/minmaxexcl.png)  
+![Min vs Max Log Returns - Including Zero Log Returns](figures/minmaxincl.png)
 
-The scatter plot compares minimum and maximum log returns for each stock, highlighting the degree of variation and risk across individual stocks.
+**Objective**: This scatter plot examines the range of log returns, focusing on the minimum and maximum returns for each stock.
 
-### Figure 4: Mean Log Return vs Volatility (Standard Deviation of Log Return)
-#### Including Zero Log Returns
-![Mean vs Volatility - Including Zero](figures/meanvincl.png)
-#### Excluding Zero Log Returns
-![Mean vs Volatility - Excluding Zero](figures/meanvexcl.png)
+#### Methodology:
+1. **Minimum and Maximum Return Calculation**: For each stock, I identified the lowest and highest daily log returns to capture the range of price movement.
+2. **Separate Analyses for Market Perspective**:
+   - *Including Zero Log Returns*: Offers a broad view of return stability across the market.
+   - *Excluding Zero Log Returns*: Focuses on variability during active trading periods.
 
-This figure explores the relationship between mean returns and volatility, providing insights into the risk-return tradeoff across different stocks.
+#### Key Observations and Insights:
+- **Stability vs. Activity**: Including zero returns shows that most stocks stay within a limited range, while excluding them emphasizes stocks prone to more extreme movements, which could appeal to risk-tolerant traders.
+
+---
+
+### Figure 4: Mean Log Return vs. Volatility (Standard Deviation of Log Return)
+![Mean Log Return vs Volatility - Excluding Zero Log Returns](figures/meanvexcl.png)  
+![Mean Log Return vs Volatility - Including Zero Log Returns](figures/meanvincl.png)
+
+**Objective**: This scatter plot assesses the relationship between average return and volatility, exploring the risk-return profile of each stock.
+
+#### Methodology:
+1. **Return and Volatility Calculation**: Calculated each stock’s mean log return and volatility.
+2. **Separate Analyses for Different Risk Perspectives**:
+   - *Including Zero Log Returns*: Highlights low-risk, low-return stocks that seldom trade.
+   - *Excluding Zero Log Returns*: Shows more variability among stocks with active trading.
+
+#### Key Observations and Insights:
+- **Risk-Return Tradeoff**: Most stocks have low returns and low volatility, but excluding zero returns reveals stocks with higher risk and potential reward, aligning with the traditional risk-return tradeoff principle.
+
+---
 
 ### Figure 5: Correlation Matrix of Summary Statistics
-#### Including Zero Log Returns
-![Correlation Matrix - Including Zero](figures/confincl.png)
-#### Excluding Zero Log Returns
-![Correlation Matrix - Excluding Zero](figures/confexcl.png)
+![Correlation Matrix - Excluding Zero Log Returns](figures/confexcl.png)  
+![Correlation Matrix - Including Zero Log Returns](figures/confincl.png)
 
-The correlation matrix provides a statistical summary of relationships between metrics such as mean, volatility, and min/max returns.
+**Objective**: This matrix explores the relationships between various statistical measures (mean, volatility, min, and max) for each stock.
 
-## Time Series Analysis
+#### Methodology:
+1. **Correlation Calculation**: Generated correlations between each statistic to assess interdependencies.
+2. **Separate Correlations for Broader and Active Market Perspectives**:
+   - *Including Zero Log Returns*: Reflects stability across low-activity stocks.
+   - *Excluding Zero Log Returns*: Emphasizes relationships within frequently traded stocks.
+
+#### Key Observations and Insights:
+- **Correlations Among Measures**: Strong relationships between min, max, and volatility in both cases indicate that volatile stocks tend to exhibit wider price swings. Excluding zero returns increases correlations, emphasizing the variability in active stocks.
+
+---
 
 ### Figure 6: Autocorrelation Analysis (30-Day Lag)
-#### Including Zero Log Returns
-![Autocorrelation Analysis - Including Zero](figures/autoincl.png)
-#### Excluding Zero Log Returns
-![Autocorrelation Analysis - Excluding Zero](figures/autoexcl.png)
+![Autocorrelation - Excluding Zero Log Returns](figures/autoexcl.png)  
+![Autocorrelation - Including Zero Log Returns](figures/autoincl.png)
 
-The autocorrelation analysis examines return persistence over a 30-day period, showing how the correlation of returns decreases over time.
+**Objective**: This plot examines autocorrelation in returns to detect potential trends or mean-reverting behavior.
 
-### Figure 7: 30-Day Rolling Volatility Across All Stocks
-#### Including Zero Log Returns
-![30-Day Rolling Volatility - Including Zero](figures/30incl.png)
-#### Excluding Zero Log Returns
-![30-Day Rolling Volatility - Excluding Zero](figures/30excl.png)
+#### Methodology:
+1. **Autocorrelation Calculation**: Calculated average autocorrelation up to a 30-day lag for each stock symbol.
+2. **Separate Analyses for Market Dynamics**:
+   - *Including Zero Log Returns*: Provides insight into overall market trends.
+   - *Excluding Zero Log Returns*: Focuses on short-term trends in actively traded stocks.
 
-The 30-day rolling volatility plot reflects changes in market conditions over time, highlighting periods of increased or decreased volatility.
+#### Key Observations and Insights:
+- **Mean-Reversion and Trend Behavior**: The rapid decay in autocorrelation, particularly when excluding zero returns, suggests a limited persistence in returns, aligning with efficient market assumptions.
 
-### Figure 8: Day-of-Week Effect on Log Returns
-#### Including Zero Log Returns
-![Day of Week Effect - Including Zero](figures/weakincl.png)
-#### Excluding Zero Log Returns
-![Day of Week Effect - Excluding Zero](figures/weakexcl.png)
+---
 
-This analysis explores whether certain days of the week exhibit consistent return patterns, revealing any potential day-of-week effect on returns.
+### Figure 7: Day-of-Week Effect on Log Returns
+![Day-of-Week Effect - Excluding Zero Log Returns](figures/weakexcl.png)  
+![Day-of-Week Effect - Including Zero Log Returns](figures/weakincl.png)
+
+**Objective**: This bar plot explores potential day-of-week effects on returns, identifying any patterns in daily performance.
+
+#### Methodology:
+1. **Mean Return by Day Calculation**: Calculated the average return for each weekday.
+2. **Separate Analyses for Day-of-Week Patterns**:
+   - *Including Zero Log Returns*: Reflects broader market patterns.
+   - *Excluding Zero Log Returns*: Highlights patterns in actively traded stocks.
+
+#### Key Observations and Insights:
+- **Weekly Trends**: The analysis shows slight patterns, though due to the limited sample size, the findings are not universally applicable. Nevertheless, negative returns mid-week suggest a potential for behavioral trends.
+
+---
+
+### Figure 8: 30-Day Average Rolling Mean and Volatility Across All Stocks
+![30-Day Rolling Mean and Volatility - Including Zero Log Returns](figures/30incl.png)  
+![30-Day Rolling Mean and Volatility - Excluding Zero Log Returns](figures/30excl.png)
+
+**Objective**: This figure shows rolling averages for mean and volatility to observe trends in returns and fluctuations over time.
+
+#### Methodology:
+1. **Rolling Mean and Volatility Calculation**: Computed a 30-day rolling mean and standard deviation for each stock symbol.
+2. **Separate Analyses for Comprehensive Trends**:
+   - *Including Zero Log Returns*: Captures stability across the market.
+   - *Excluding Zero Log Returns*: Shows more variability in actively traded stocks.
+
+#### Key Observations and Insights:
+- **Market Stability and Activity**: The smooth volatility when including zero returns reflects market stability, while excluding zero returns reveals volatility spikes, potentially useful for short-term trading insights.
+
+---
 
 ## Conclusion
 
-This analysis sheds light on the dynamics of U.S. stock returns and volatility, examining patterns across both inactive and actively traded stocks. By including and excluding zero log returns, we can see both the effects of stagnant trading periods and the behavior of more liquid stocks, providing a broad and insightful view into stock market performance.
+This analysis offers a detailed view of the U.S. stock market’s performance, capturing both broad market stability and specific patterns in active trading periods. By including zero returns, the study presents a conservative measure of the market, ideal for understanding overall stability. In contrast, focusing on non-zero returns provides insights into more dynamic trading activity, useful for risk-seeking investors.
+
+The findings highlight key aspects of return distribution, volatility, extreme price changes, and potential day-of-week effects. While the dataset was limited to a small sample of all U.S. stocks, the dual analysis approach provides a balanced perspective on market behavior, catering to both long-term and short-term investment strategies.
+
+---
